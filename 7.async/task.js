@@ -9,10 +9,8 @@ class AlarmClock {
             throw new Error('error text')
         };
 
-        if (this.alarmCollection.some(item => {
-            return item.id === id
-        })) {
-            return console.error("Тут какая-то ошибка!")
+        if (this.alarmCollection.some(item => item.id === id)) {
+            return console.error("Такой звонок уже существует!")
         };
 
         this.alarmCollection.push({ time, callback, id })
@@ -22,9 +20,7 @@ class AlarmClock {
     removeClock(id) {
         let startLength = this.alarmCollection.length;
 
-        this.alarmCollection = this.alarmCollection.filter(item => {
-            return item.id !== id
-        });
+        this.alarmCollection = this.alarmCollection.filter(item => item.id !== id);
 
         let finishLength = this.alarmCollection.length;
 
@@ -47,26 +43,26 @@ class AlarmClock {
 
     checkClock() {
         let timeNow = this.getCurrentFormattedTime();
-        this.alarmCollection.forEach((item) => {
-            return timeNow === item.time
-        })
+        if (this.alarmCollection.forEach((item) => timeNow === item.time)) {
+            return item.time
+        }
     }
 
     stop() {
-        if (this.timerId !== undefined) {
+        if (this.timerId !== null) {
             return this.timerId = null
-        }
+        };
+
+        clearInterval(this.timerId);
     };
 
     printAlarms() {
         console.log(`Печать всех будильников в количестве: ${this.alarmCollection.length}`)
-        this.alarmCollection.forEach((item) => {
-            console.log(`Будильник № ${item.id} заведен на ${item.time}`)
-        })
+        this.alarmCollection.forEach((item) => console.log(`Будильник № ${item.id} заведен на ${item.time}`))
     };
 
     clearAlarms() {
-        stop();
+        this.stop();
         this.alarmCollection = []
     }
 }
